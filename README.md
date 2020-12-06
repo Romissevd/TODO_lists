@@ -1,2 +1,11 @@
 # TODO_lists
-Python, Fast API
+### Technology
+* Python 3.8
+* Fast API
+* Uvicorn
+
+
+Run project
+```
+uvicorn main:app --port 8001
+```
