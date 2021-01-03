@@ -2,6 +2,7 @@ from sqlalchemy import Column, String, Text, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 
 from core.db import Base
+from user.models import User
 
 
 class Task(Base):
@@ -11,4 +12,4 @@ class Task(Base):
     description = Column(Text)
     created_at = Column(DateTime)
     user = Column(Integer, ForeignKey('users.id'))
-    user_id = relationship('User')
+    user_id = relationship(User)

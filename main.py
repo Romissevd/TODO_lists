@@ -1,20 +1,22 @@
-from fastapi import FastAPI, Path
+from fastapi import FastAPI
+from starlette.requests import Request
+from starlette.responses import Response
 
-from schemas import Task, TaskOut
+from core.db import SessionLocal
+from routers import router
+
 
 app = FastAPI()
 
 
-@app.get('/')
-def test():
-    return {'key': 'Hello world'}
+@app.middleware('http')
+async def db_session_middleware(request: Request, call_next):
+    response = Response('Internal server error', status_code=500)
+    try:
+        request.state.db = SessionLocal()
+        response = await call_next(request)
+    finally:
+        request.state.db.close()
+    return response
 
-
-@app.post('/task/')
-def create_task(item: Task):
-    return TaskOut(**item.dict(), id=3)
-
-
-@app.get('/task/{pk}/')
-def get_single_task(pk: int = Path(..., gt=1)):
-    return {'pk': pk}
+app.include_router(router)

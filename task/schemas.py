@@ -1,17 +1,13 @@
 from datetime import datetime
 
 from pydantic import BaseModel, Field
-
-
-class User(BaseModel):
-    first_name: str = Field(..., max_length=25)
-    last_name: str = Field(..., max_length=50)
+from user.schemas import UserBase
 
 
 class Task(BaseModel):
     title: str = Field(..., max_length=100)
     description: str = None
-    author: User
+    author: UserBase
     created_at: datetime
 
 
