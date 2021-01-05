@@ -11,5 +11,5 @@ class Task(Base):
     title = Column(String)
     description = Column(Text)
     created_at = Column(DateTime)
-    user = Column(Integer, ForeignKey('users.id'))
-    user_id = relationship(User)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    user = relationship(User)

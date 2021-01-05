@@ -11,12 +11,12 @@ router = APIRouter()
 
 
 @router.get('/', response_model=List[schemas.UserList])
-def task_list(db: Session = Depends(get_db)):
-    users = service.get_user_list(db)
-    return users
+def users(db: Session = Depends(get_db)):
+    users_list = service.get_user_list(db)
+    return users_list
 
 
 @router.post('/')
-def task_list(item: schemas.UserCreate, db: Session = Depends(get_db)):
-    user = service.create_user(db, item=item)
-    return user
+def user(item: schemas.UserCreate, db: Session = Depends(get_db)):
+    new_user = service.create_user(db, item=item)
+    return new_user
